@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Landing Page</title>
+  <!-- Load all weights of EB Garamond and Montserrat from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=EB+Garamond:400,500,600,700,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: #232A30;
+      width: 100%;
+    }
+    body {
+      min-height: 100vh;
+      min-width: 100vw;
+      display: flex;
+      align-items: flex-start; /* Changed from center to flex-start */
+      justify-content: center;
+    }
+    .hero-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start; /* Changed from center to flex-start */
+      width: 100vw;
+      height: 100vh;
+      padding-top: 20vh; /* Add a little space from the very top */
+      box-sizing: border-box;
+    }
+    #lottie {
+      padding: 40px;
+      background: transparent;
+      max-width: 90vw;
+      max-height: 60vh;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .subtitle {
+      opacity: 0;
+      color: #FAF0E1;
+      font-family: 'EB Garamond', serif;
+      font-weight: 400; /* Changed from 50 to 400 for regular weight */
+      text-align: center;
+      margin-top: 32px;
+      margin-bottom: 32px; /* Add this line for more space below subtitle */
+      font-size: clamp(12pt, 20vw, 48pt);
+      transition: opacity 1s;
+      width: 100%;
+      max-width: 90vw;
+    }
+    .subtitle.visible {
+      opacity: 1;
+    }
+    .contact {
+      margin-top: 18px;
+      color: #FAF0E1;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.2em;
+      text-align: center;
+      transition: color 0.2s;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+    .contact.visible {
+      opacity: 1;
+    }
+    .contact a {
+      color: #FAF0E1;
+      text-decoration: none;
+      transition: color 0.2s, text-decoration 0.2s;
+    }
+    .contact a:hover {
+      color: #07CDA8;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="hero-container">
+    <div id="lottie"></div>
+    <div class="subtitle" id="subtitle">Self-Driving for Stem Cell Differentiation</div>
+    <div class="contact" id="contact">
+      Contact: <a href="mailto:hello@biomorphic-ai.com">hello@biomorphic-ai.com</a>
+    </div>
+  </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+<script>
+  const animation = lottie.loadAnimation({
+    container: document.getElementById('lottie'),
+    renderer: 'svg',
+    loop: false,
+    autoplay: true,
+    path: 'LogoTextAnimation.json'
+  });
+
+  // Fade in subtitle after 5 seconds
+  setTimeout(function () {
+    document.getElementById('subtitle').classList.add('visible');
+  }, 5300);
+
+  // Fade in contact after 6 seconds
+  setTimeout(function () {
+    document.getElementById('contact').classList.add('visible');
+  }, 6000);
+
+  function resizeSubtitle() {
+    const logo = document.getElementById('lottie');
+    const subtitle = document.getElementById('subtitle');
+    const logoHeight = logo.offsetHeight;
+    // 0.4 * logo height, but at least 2em
+    const minFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) * 1.6;
+    const fontSize = Math.max(logoHeight * 0.1, minFontSize);
+    subtitle.style.fontSize = fontSize + 'px';
+  }
+
+  // Only resize after Lottie SVG is rendered
+  animation.addEventListener('DOMLoaded', function () {
+    resizeSubtitle();
+    window.addEventListener('resize', resizeSubtitle);
+  });
+</script>
+</html>
